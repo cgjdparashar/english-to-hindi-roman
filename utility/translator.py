@@ -1,14 +1,29 @@
+"""
+English to Hinglish translator utility module
+"""
+
 from deep_translator import GoogleTranslator
 from indic_transliteration import sanscript
 from indic_transliteration.sanscript import transliterate
 import ssl
 import os
+import urllib3
+import requests
 
-# Disable SSL verification for development (if needed)
-try:
-    ssl._create_default_https_context = ssl._create_unverified_context
-except:
-    pass
+# Disable SSL warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Disable SSL verification globally
+ssl._create_default_https_context = ssl._create_unverified_context
+
+# Patch requests session to disable SSL verification
+original_request = requests.Session.request
+
+def patched_request(self, *args, **kwargs):
+    kwargs['verify'] = False
+    return original_request(self, *args, **kwargs)
+
+requests.Session.request = patched_request
 
 
 def english_to_hinglish(text: str) -> str:
@@ -37,6 +52,7 @@ def english_to_hinglish(text: str) -> str:
     
     try:
         # Step 1: Translate English to Hindi using deep-translator
+        # SSL verification is disabled globally at module level
         translator = GoogleTranslator(source='en', target='hi')
         hindi_text = translator.translate(text)
         

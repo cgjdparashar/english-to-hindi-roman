@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "deep-translator>=1.11.4",
+    "fastapi>=0.120.2",
     "indic-transliteration>=2.3.75",
+    "pydantic>=2.12.3",
     "translators>=6.0.1",
+    "uvicorn>=0.38.0",
 ]

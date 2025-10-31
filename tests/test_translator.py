@@ -1,10 +1,10 @@
 import sys
 import os
 
-# Add parent directory to path to import main module
+# Add parent directory to path to import utility module
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from main import english_to_hinglish
+from utility.translator import english_to_hinglish
 
 
 def test_english_to_hinglish_basic():

@@ -31,7 +31,7 @@ A Python application that converts English text to Hinglish (Hindi in Roman scri
 ### Basic Usage
 
 ```python
-from main import english_to_hinglish
+from utility.translator import english_to_hinglish
 
 # Translate English to Hinglish
 result = english_to_hinglish("hello how are you")
@@ -52,6 +52,46 @@ uv run python main.py
 ```bash
 uv run python tests/test_translator.py
 ```
+
+### Run the API Server
+
+```bash
+# Start the FastAPI server
+uv run uvicorn api.app:app --host 127.0.0.1 --port 8000
+
+# Or with auto-reload for development
+uv run uvicorn api.app:app --reload --host 127.0.0.1 --port 8000
+```
+
+Then access:
+- **Swagger UI (Interactive API Docs):** http://localhost:8000/docs
+- **API Health Check:** http://localhost:8000/health
+- **ReDoc:** http://localhost:8000/redoc
+
+### Test the API
+
+```bash
+# Run the API test suite
+uv run python api/test_api.py
+```
+
+## API Endpoints
+
+The API provides the following endpoints:
+
+### Health Check
+- `GET /` - Root endpoint
+- `GET /health` - Health check
+
+### Translation
+- `POST /translate` - Translate text (JSON body)
+  ```json
+  {
+    "text": "hello how are you"
+  }
+  ```
+
+For complete API documentation, see [api/README.md](api/README.md)
 
 ## SSL Certificate Issues
 
@@ -96,12 +136,21 @@ uv add certifi
 
 ```
 english-to-hindi-roman/
-├── main.py                 # Main translation module
-├── tests/
-│   └── test_translator.py  # Test suite
-├── pyproject.toml          # Project dependencies
-├── .python-version         # Python version specification
-└── README.md              # This file
+├── main.py                      # Main translation module
+├── api/                         # REST API
+│   ├── __init__.py              # API package init
+│   ├── app.py                   # FastAPI application
+│   ├── models.py                # Pydantic models (request/response)
+│   ├── test_api.py              # API test suite
+│   └── README.md                # API documentation
+├── tests/                       # Unit tests
+│   └── test_translator.py       # Translation tests
+├── demo_transliteration.py      # Transliteration demo
+├── fix_ssl.py                   # SSL troubleshooting helper
+├── pyproject.toml               # Project dependencies
+├── .python-version              # Python version
+├── README.md                    # This file
+└── SSL_TROUBLESHOOTING.md       # SSL fix guide
 ```
 
 ## How It Works
