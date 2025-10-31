@@ -205,4 +205,12 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-story
+
+# Project specific
+story/
+*.json
+*_results.txt
+*_test_*.txt
+.playwright-mcp/
+quick_test_*
+translation_quality_*

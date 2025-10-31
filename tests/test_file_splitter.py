@@ -3,10 +3,16 @@ Test script for file_splitter utility.
 Tests the file splitting functionality with various scenarios.
 """
 
-from utility.file_splitter import split_file, split_text_into_chunks
+import sys
 from pathlib import Path
 import tempfile
 import os
+
+# Add project root to Python path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+from utility.file_splitter import split_file, split_text_into_chunks
 
 
 def test_split_text_into_chunks():

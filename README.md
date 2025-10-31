@@ -13,6 +13,7 @@ A comprehensive Python application that converts English text to Hinglish (Hindi
 ### File Processing Utilities
 - **File Splitter**: Split large text files (up to 300k characters) into smaller chunks
 - **Generic File Splitter**: Universal file splitter supporting any file path (absolute/relative)
+- **File Merger**: Merge split text files back into a single file with custom separators
 - **File Translator**: Translate entire text files to Hinglish
 - **Smart Text Chunking**: Breaks text at sentence boundaries for better readability
 
@@ -141,6 +142,36 @@ from utility.translator import english_to_hinglish
 
 text = "Your English text here"
 hinglish_result = english_to_hinglish(text)
+```
+
+### File Merger Utility
+
+Merge split text files back into a single file:
+
+```bash
+# Basic merge - combines numbered files (1.txt, 2.txt, etc.)
+python utility/generic_file_merger.py "story/output/story_31_10"
+
+# Custom output file
+python utility/generic_file_merger.py "story/output/story_31_10" --output "merged_story.txt"
+
+# Custom separator between merged sections
+python utility/generic_file_merger.py "story/translate/story_31_10" --separator "\n---\n"
+```
+
+Programmatic usage:
+
+```python
+# Merge any folder containing numbered files
+from utility.generic_file_merger import merge_any_folder
+
+result = merge_any_folder("story/output/story_31_10")
+if result["success"]:
+    print(f"Merged {result['files_merged']} files into {result['output_file']}")
+
+# Merge translated files (story mode)
+from utility.file_merger import merge_translated_files
+result = merge_translated_files("story_31_10")
 ```
 
 ## API Endpoints
@@ -335,6 +366,7 @@ curl -X POST "http://localhost:8000/translate" \
 - **[API Guide](docs/API_README.md)** - Complete API documentation
 - **[File Splitter Guide](docs/FILE_SPLITTER.md)** - File splitting utility
 - **[Generic Splitter Guide](docs/GENERIC_FILE_SPLITTER.md)** - Universal file processor
+- **[File Merger Guide](docs/FILE_MERGER.md)** - Merge split files back together
 - **[File Translator Guide](docs/FILE_TRANSLATOR.md)** - File translation utility
 - **[SSL Troubleshooting](docs/SSL_TROUBLESHOOTING.md)** - SSL configuration help
 - **[Quick Start](docs/QUICKSTART.md)** - Get started quickly
